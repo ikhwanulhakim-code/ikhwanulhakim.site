@@ -1,0 +1,1070 @@
+<div id="ikhwan-card" data-theme="dark" aria-label="Profil singkat">
+  <style>
+    #ikhwan-card {
+      --bg: #0b0f19;
+      --bg2: #11182a;
+      --card: #121a2c;
+      --ring: #2b3a57;
+      --text: #e9eef8;
+      --muted: #b9c4d6;
+      --brand: #68a4ff;
+      --brand2: #3ad7ff;
+      --spacing-xs: clamp(6px, 1.5vw, 18px);
+      --spacing-sm: clamp(8px, 2vw, 27px);
+      --spacing-md: clamp(12px, 3vw, 28px);
+      --spacing-lg: clamp(16px, 4vw, 40px);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+        Inter, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans",
+        sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+    #ikhwan-card[data-theme="light"] {
+      --bg: #f6f8fb;
+      --bg2: #e9edf5;
+      --card: #ffffff;
+      --ring: #dbe3f0;
+      --text: #0b1220;
+      --muted: #445066;
+      --brand: #2b6fd6;
+      --brand2: #39b9ff;
+    }
+    @media (prefers-color-scheme: light) {
+      #ikhwan-card:not([data-theme]) {
+        --bg: #f6f8fb;
+        --bg2: #e9edf5;
+        --card: #ffffff;
+        --ring: #dbe3f0;
+        --text: #0b1220;
+        --muted: #445066;
+        --brand: #2b6fd6;
+        --brand2: #39b9ff;
+      }
+    }
+
+    #ikhwan-card .ik-wrap {
+      min-height: 100dvh;
+      min-height: 100svh;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 4vw, 40px);
+      box-sizing: border-box;
+      color: var(--text);
+      background: linear-gradient(135deg, var(--bg) 0%, #1a2844 100%);
+      transition: background 0.5s ease;
+    }
+    #ikhwan-card .ik-card {
+      width: 100%;
+      max-width: 100%;
+      max-height: none;
+      overflow: visible;
+      overflow-x: hidden;
+      overscroll-behavior: none;
+      -webkit-overflow-scrolling: auto;
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--ring);
+      border-radius: 20px;
+      padding: clamp(22px, 4vw, 44px);
+      box-shadow: 0 20px 60px #00000066;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+      margin: 0 auto;
+      contain: layout style paint;
+    }
+    #ikhwan-card .kicker {
+      --g1: var(--brand);
+      --g2: var(--brand2);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(0.4ch, 1vw, 0.8ch);
+      background: linear-gradient(var(--card), var(--card)) padding-box,
+        linear-gradient(90deg, var(--g1), var(--g2)) border-box;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: clamp(6px, 1.5vw, 18px) clamp(10px, 2.5vw, 30px);
+      line-height: 1;
+      font-size: clamp(12px, 1.17vw, 27px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #dbe5f4;
+      box-shadow: 0 6px 16px #00000022 inset, 0 6px 18px #0000001f;
+      overflow: hidden;
+      margin-bottom: clamp(8px, 2vw, 27px);
+      background-size: 100% 100%, 200% 100%;
+      animation: ik-sheen 6s linear infinite;
+    }
+    #ikhwan-card .kicker::before {
+      content: "";
+      position: absolute;
+      inset: -30% -40%;
+      background: radial-gradient(
+        60% 60% at 30% 30%,
+        var(--g2) 0%,
+        transparent 60%
+      );
+      filter: blur(12px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    #ikhwan-card[data-theme="light"] .kicker {
+      color: #2b6fd6;
+    }
+    #ikhwan-card .k-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--brand2);
+      box-shadow: 0 0 0 2px #3ad7ff22, 0 0 10px #3ad7ff66;
+      position: relative;
+      flex: 0 0 auto;
+      animation: ik-pulse 1.6s ease-in-out infinite;
+    }
+    #ikhwan-card .k-dot::after {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: inherit;
+      border: 2px solid #3ad7ff55;
+      opacity: 0;
+      animation: ik-wave 1.6s ease-out infinite;
+    }
+    #ikhwan-card .k-sep {
+      opacity: 0.55;
+    }
+    #ikhwan-card .k-state {
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    #ikhwan-card .title {
+      font-size: clamp(27.5px, 3.27vw, 129px);
+      line-height: 1.08;
+      margin: 0 0 clamp(8px, 1.7vw, 40px) 0;
+      letter-spacing: 0.4px;
+      color: var(--text);
+      text-rendering: optimizeLegibility;
+    }
+    #ikhwan-card .title .grad {
+      background: linear-gradient(43deg, var(--brand) 0%, var(--brand2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #ikhwan-card .sub {
+      margin: 0 0 clamp(18px, 2vw, 40px) 0;
+      font-size: clamp(15px, 1.68vw, 65px);
+      color: var(--muted);
+    }
+
+    #ikhwan-card .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: clamp(8px, 2vw, 16px);
+      margin-bottom: clamp(12px, 3vw, 28px);
+    }
+    #ikhwan-card .toolbar .actions {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 1.5vw, 12px);
+    }
+    #ikhwan-card .ik-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 1.5vw, 14px);
+      padding: clamp(6px, 1.5vw, 12px) clamp(8px, 1.8vw, 14px);
+      min-height: clamp(32px, 3.3vw, 65px);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      font-size: clamp(16px, 2.7vw, 65px);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      border: none;
+      outline: none;
+      outline-offset: 0;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+    #ikhwan-card .ik-toggle:focus {
+      outline: none !important;
+      outline-offset: 0 !important;
+      box-shadow: none !important;
+      -webkit-appearance: none;
+    }
+    #ikhwan-card .ik-toggle:focus-visible {
+      outline: none !important;
+      outline-offset: 0 !important;
+      box-shadow: none !important;
+      -webkit-appearance: none;
+    }
+    #ikhwan-card .ik-toggle:hover {
+      background: var(--brand2);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+    }
+    #ikhwan-card .ik-toggle:active {
+      transform: translateY(0);
+    }
+    #ikhwan-card .ik-toggle .icon {
+      width: clamp(18px, 2.07vw, 62.5px);
+      height: clamp(18px, 2.07vw, 62.5px);
+      display: block;
+    }
+    /* Show/hide theme icons based on current theme */
+    #ikhwan-card .ik-toggle.ik-theme .icon-sun {
+      display: block;
+    }
+    #ikhwan-card .ik-toggle.ik-theme .icon-moon {
+      display: none;
+    }
+    #ikhwan-card[data-theme="light"] .ik-toggle.ik-theme .icon-sun {
+      display: none;
+    }
+    #ikhwan-card[data-theme="light"] .ik-toggle.ik-theme .icon-moon {
+      display: block;
+    }
+    /* Mobile-only Info button hidden by default (shown in mobile MQ) */
+    #ikhwan-card .ik-info--mobile {
+      display: none;
+    }
+    /* Slightly smaller info icon only */
+    #ikhwan-card .ik-toggle.ik-info .icon {
+      width: clamp(18px, 2.07vw, 62.5px);
+      height: clamp(18px, 2.07vw, 62.5px);
+    }
+    /* Info button attention animation */
+    #ikhwan-card .ik-toggle.ik-info {
+      animation: none;
+    }
+    #ikhwan-card .ik-toggle.ik-info .icon {
+      animation: ik-icon-wiggle 1.2s ease-in-out infinite;
+    }
+    #ikhwan-card .ik-toggle.ik-info:hover {
+      animation: none;
+    }
+    /* Theme toggle animation */
+    #ikhwan-card .ik-toggle.ik-theme.ik-toggling .icon {
+      animation: ik-theme-spin 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)
+        forwards;
+    }
+
+    #ikhwan-card .profile-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: clamp(20px, 5vw, 44px);
+      margin-bottom: clamp(12px, 3vw, 28px);
+      width: 100%;
+    }
+    #ikhwan-card .profile-main {
+      flex: 1 1 0%;
+      min-width: 0;
+    }
+    #ikhwan-card .profile-photo {
+      --avatar-size: clamp(58px, 29vw, 600px);
+      --ring-thickness: clamp(2.2px, 0.81vw, 8.6px);
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+    #ikhwan-card .avatar {
+      position: relative;
+      width: var(--avatar-size);
+      height: var(--avatar-size);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+      overflow: visible;
+    }
+    #ikhwan-card .avatar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        var(--brand) 0%,
+        var(--brand2) 40%,
+        var(--brand) 100%
+      );
+      -webkit-mask: radial-gradient(
+        circle at 50% 50%,
+        transparent calc(50% - var(--ring-thickness) - 1px),
+        #000 calc(50% - var(--ring-thickness))
+      );
+      mask: radial-gradient(
+        circle at 50% 50%,
+        transparent calc(50% - var(--ring-thickness) - 1px),
+        #000 calc(50% - var(--ring-thickness))
+      );
+      will-change: transform;
+      animation: ik-spin 16s linear infinite;
+      opacity: 0.9;
+      z-index: 0;
+    }
+    #ikhwan-card .avatar::after {
+      content: "";
+      position: absolute;
+      inset: calc(var(--avatar-size) * -0.1);
+      border-radius: 50%;
+      background: radial-gradient(closest-side, var(--brand2), transparent 70%);
+      filter: blur(8px);
+      opacity: 0.15;
+      z-index: -1;
+      pointer-events: none;
+      will-change: filter;
+    }
+    #ikhwan-card .profile-photo img {
+      width: calc(var(--avatar-size) - (var(--ring-thickness) * 2));
+      height: calc(var(--avatar-size) - (var(--ring-thickness) * 2));
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: var(--bg2);
+      box-shadow: 0 6px 24px #0003;
+      z-index: 1;
+    }
+    #ikhwan-card .presence {
+      --presence-size: clamp(7px, calc(var(--avatar-size) * 0.06), 35px);
+      --presence-inset: calc(var(--presence-size) * 0.35);
+      --presence-angle: 45deg;
+      --presence-nudge-x: 2px;
+      --presence-nudge-y: 2px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--presence-size);
+      height: var(--presence-size);
+      border-radius: 999px;
+      background: #20c463;
+      box-shadow: 0 0 10px #20c46399;
+      z-index: 2;
+      pointer-events: none;
+      transform: translate(var(--presence-nudge-x), var(--presence-nudge-y))
+        translate(-50%, -50%) rotate(var(--presence-angle))
+        translateX(calc((var(--avatar-size) / 2) - var(--presence-inset)));
+      overflow: hidden;
+      animation: ik-presence-glow 2.5s ease-in-out infinite;
+    }
+    #ikhwan-card .presence::after {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: inherit;
+      animation: ik-wave 2s ease-out infinite;
+    }
+
+    #ikhwan-card .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(8px, 2vw, 16px);
+      justify-content: flex-end;
+    }
+    #ikhwan-card .btn {
+      --b1: var(--brand);
+      --b2: var(--brand2);
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 1.5vw, 14px);
+      padding: clamp(6px, 1.5vw, 12px) clamp(8px, 1.8vw, 14px);
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      background: transparent;
+      box-shadow: none;
+      font-weight: 600;
+      font-size: clamp(16px, 2.7vw, 65px);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      border: none;
+      outline: none;
+      outline-offset: 0;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+    #ikhwan-card .btn:focus {
+      outline: none !important;
+      outline-offset: 0 !important;
+      box-shadow: none !important;
+      -webkit-appearance: none;
+    }
+    #ikhwan-card .btn:focus-visible {
+      outline: none !important;
+      outline-offset: 0 !important;
+      box-shadow: none !important;
+      -webkit-appearance: none;
+    }
+    #ikhwan-card .btn:hover {
+      background: var(--brand2);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 8px 24px #0003;
+    }
+    #ikhwan-card .btn:active {
+      transform: translateY(0);
+    }
+    #ikhwan-card .btn .ico {
+      width: clamp(18px, 2.07vw, 62.5px);
+      height: clamp(18px, 2.07vw, 62.5px);
+      display: block;
+    }
+    #ikhwan-card .btn .label {
+      letter-spacing: 0.2px;
+    }
+    #ikhwan-card .btn.wa {
+      --b1: #20c463;
+      --b2: #39e08b;
+    }
+    #ikhwan-card .btn.ig {
+      --b1: #ff7a59;
+      --b2: #d83aff;
+    }
+    #ikhwan-card .btn.in {
+      --b1: #2b6fd6;
+      --b2: #39b9ff;
+    }
+    #ikhwan-card .btn.work {
+      --b1: var(--brand2);
+      --b2: var(--brand);
+    }
+    #ikhwan-card .socials .btn.work {
+      margin-left: auto;
+    }
+    @media (max-width: 600px) {
+      #ikhwan-card .profile-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+      }
+      #ikhwan-card .kicker .k-state {
+        display: inline;
+      }
+      #ikhwan-card .kicker .k-sep {
+        display: inline;
+      }
+      #ikhwan-card .ik-wrap {
+        height: auto;
+        min-height: 100svh;
+        overflow-y: visible;
+        overflow-x: hidden;
+        overscroll-behavior: none;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+      #ikhwan-card .ik-card {
+        max-height: none;
+        overflow: visible;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: auto;
+      }
+      #ikhwan-card .profile-photo {
+        width: 70%;
+        container-type: inline-size;
+        --avatar-size: 100cqi;
+        justify-content: center;
+      }
+      #ikhwan-card .profile-main {
+        min-width: 0;
+      }
+      #ikhwan-card .avatar {
+        overflow: visible;
+      }
+      #ikhwan-card .toolbar .ik-info {
+        display: none;
+      }
+      #ikhwan-card .socials .ik-info--mobile {
+        display: inline-flex;
+        margin-right: auto;
+      }
+      #ikhwan-card .ik-modal-dialog {
+        padding: 0 !important;
+        width: 95% !important;
+        margin: 5vh auto;
+        max-height: calc(100dvh - 10vh);
+      }
+      #ikhwan-card .ik-modal-title {
+        font-size: clamp(14px, 3vw, 24px);
+      }
+      #ikhwan-card .ik-modal-close {
+        padding: clamp(5px, 1vw, 10px) clamp(8px, 1.5vw, 14px);
+        font-size: clamp(12px, 2vw, 20px);
+      }
+      #ikhwan-card .ik-modal-header {
+        padding: clamp(12px, 3vw, 18px) clamp(16px, 4vw, 22px) clamp(8px, 2vw, 12px);
+        margin-bottom: 0;
+        border-bottom: none;
+      }
+      #ikhwan-card .ik-modal-body {
+        padding: clamp(12px, 3vw, 18px) clamp(16px, 4vw, 22px);
+      }
+      #ikhwan-card .ik-fact p {
+        margin: 0;
+        font-size: clamp(15px, 1.68vw, 65px);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #ikhwan-card .kicker,
+      #ikhwan-card .k-dot,
+      #ikhwan-card .k-dot::after,
+      #ikhwan-card .avatar::before,
+      #ikhwan-card .presence::after {
+        animation: none !important;
+      }
+    }
+    @keyframes ik-pulse {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.12);
+      }
+    }
+    @keyframes ik-wave {
+      0% {
+        opacity: 0.5;
+        transform: scale(0.7);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+    }
+    @keyframes ik-sheen {
+      to {
+        background-position: left top, 100% 0;
+      }
+    }
+    @keyframes ik-spin {
+      to {
+        transform: rotate3d(0, 0, 1, 360deg);
+      }
+    }
+    @keyframes ik-icon-wiggle {
+      0%,
+      100% {
+        transform: rotate(0deg) scale(1);
+      }
+      25% {
+        transform: rotate(-5deg) scale(1.015);
+      }
+      75% {
+        transform: rotate(5deg) scale(1.015);
+      }
+    }
+    @keyframes ik-theme-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes ik-presence-glow {
+      0%,
+      100% {
+        box-shadow: 0 0 0 2px var(--card), 0 0 10px #20c46399;
+      }
+      50% {
+        box-shadow: 0 0 0 2px var(--card), 0 0 20px #20c463cc,
+          0 0 30px #20c46366;
+      }
+    }
+    @keyframes ik-fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    #ikhwan-card .ik-modal[aria-hidden="true"] {
+      visibility: hidden;
+      opacity: 0;
+    }
+    #ikhwan-card .ik-modal[aria-hidden="false"] {
+      visibility: visible;
+      opacity: 1;
+    }
+    #ikhwan-card .ik-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+    }
+    #ikhwan-card .ik-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: #0009;
+      backdrop-filter: blur(5px);
+      animation: ik-fade-in 0.3s ease-out forwards;
+    }
+    #ikhwan-card .ik-modal[aria-hidden="true"] .ik-modal-backdrop {
+      animation: none;
+    }
+    #ikhwan-card .ik-modal-dialog {
+      position: relative;
+      width: clamp(300px, 60vw, 1000px);
+      margin: 10vh auto 0;
+      max-height: calc(100dvh - 10vh);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--ring);
+      border-radius: clamp(12px, 2vw, 27px);
+      box-shadow: 0 20px 60px #000a;
+      padding: clamp(12px, 2vw, 30px);
+      outline: none;
+    }
+    #ikhwan-card .ik-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(6px, 1.5vw, 18px);
+      margin-bottom: clamp(6px, 1.5vw, 18px);
+      border-bottom: 1px solid var(--ring);
+      padding-bottom: clamp(4px, 1vw, 12px);
+    }
+    #ikhwan-card .ik-modal-title {
+      font-size: clamp(16px, 3vw, 40px);
+      margin: 0;
+      color: var(--text);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 1.5vw, 15px);
+    }
+    #ikhwan-card .ik-modal-title .grad {
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+    }
+    #ikhwan-card .ik-modal-close {
+      appearance: none;
+      border: 1px solid var(--ring);
+      background: var(--card);
+      color: var(--text);
+      border-radius: clamp(8px, 1.5vw, 18px);
+      padding: clamp(6px, 1.2vw, 14px) clamp(8px, 1.8vw, 20px);
+      cursor: pointer;
+      font-size: clamp(13px, 2vw, 28px);
+      line-height: 1;
+      transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    #ikhwan-card .ik-modal-close:hover {
+      background: var(--brand2);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 8px 24px #0003;
+    }
+    #ikhwan-card .ik-modal-close:active {
+      transform: translateY(0);
+    }
+    #ikhwan-card .ik-modal-body {
+      color: var(--muted);
+      font-size: clamp(12px, 3vw, 32px);
+    }
+    #ikhwan-card .ik-fact {
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+      margin-top: 0;
+    }
+    #ikhwan-card .ik-fact h4 {
+      margin: 0 0 clamp(4px, 1.2vw, 12px) 0;
+      font-size: clamp(12px, 2vw, 27px);
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 1.5vw, 15px);
+    }
+    #ikhwan-card .ik-fact p {
+      margin: 0 0 clamp(6px, 1.5vw, 21px) 0;
+      font-size: clamp(15px, 1.68vw, 65px);
+    }
+    #ikhwan-card .ik-wrap.ik-modal-open {
+      filter: blur(5px);
+      transition: filter 0.3s ease-out;
+    }
+  </style>
+  <style>
+    @media (max-width: 600px) {
+      html,
+      body {
+        margin: 0 !important;
+        height: auto !important;
+        min-height: 100svh;
+        overflow: visible !important;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      #ikhwan-card {
+        overflow: visible;
+      }
+    }
+    html,
+    body {
+      overscroll-behavior: none;
+    }
+  </style>
+
+  <div class="ik-wrap" role="region" aria-label="Profil singkat">
+    <section class="ik-card" aria-labelledby="ik-intro-title">
+      <div class="toolbar">
+        <div class="kicker" aria-hidden="true">
+          <span class="k-dot"></span>
+          <span>Profile</span>
+          <span class="k-sep">·</span>
+          <span class="k-state">Available</span>
+        </div>
+
+        <div class="actions">
+          <button
+            class="ik-toggle ik-info"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="ik-info-modal"
+            tabindex="0"
+            title="Fun Fact Information"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              class="icon"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+              />
+              <path
+                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
+              />
+            </svg>
+          </button>
+
+          <button
+            class="ik-toggle ik-theme"
+            type="button"
+            aria-pressed="false"
+            tabindex="0"
+            title="Toggle theme"
+          >
+            <svg
+              class="icon icon-sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="5.5"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            <svg
+              class="icon icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-row">
+        <div class="profile-photo" aria-label="Foto profil">
+          <div class="avatar">
+            <img
+              src="https://ikhwanulhakim.site/wp-content/uploads/2025/12/muhammad-ikhwanul-hakim-software-engineer-project-manager.png"
+              alt="Muhammad Ikhwanul Hakim - Software Engineer Portfolio"
+              decoding="async"
+              loading="lazy"
+              fetchpriority="high"
+            />
+            <span class="presence" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <div class="profile-main">
+          <h1 class="title" id="ik-intro-title">
+            Hi, I’m <span class="grad">Muhammad Ikhwanul Hakim</span>.
+          </h1>
+          <p class="sub">
+            I’m <strong>Muhammad Ikhwanul Hakim</strong>, a
+            <strong>Project Manager</strong> and
+            <strong>Software Engineer</strong> dedicated to building impactful
+            web and mobile applications, guiding projects from idea to launch
+            with clean, scalable solutions, while ensuring a seamless experience
+            for both users and teams throughout the development process.
+          </p>
+        </div>
+      </div>
+
+      <nav class="socials" aria-label="Media sosial & kontak">
+        <button
+          class="ik-toggle ik-info ik-info--mobile"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="ik-info-modal"
+          title="Fun Fact Information"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            class="icon"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"
+            />
+            <path
+              d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
+            />
+          </svg>
+        </button>
+        <a
+          class="btn wa"
+          href="https://wa.me/6289691964368"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp Muhammad Ikhwanul Hakim"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            class="ico"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"
+            />
+          </svg>
+        </a>
+        <a
+          class="btn ig"
+          href="https://instagram.com/ikhwanulhakim.me"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram Muhammad Ikhwanul Hakim"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            class="ico"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.48 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"
+            />
+          </svg>
+        </a>
+        <a
+          class="btn in"
+          href="https://id.linkedin.com/in/ikhwanulhakimm"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn Muhammad Ikhwanul Hakim"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            class="ico"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"
+            />
+          </svg>
+        </a>
+      </nav>
+    </section>
+  </div>
+
+  <div
+    class="ik-modal"
+    id="ik-info-modal"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ik-info-title"
+  >
+    <div
+      class="ik-modal-backdrop"
+      data-dismiss="ik-info-modal"
+      tabindex="-1"
+      aria-hidden="true"
+    ></div>
+    <div class="ik-modal-dialog" role="document" tabindex="-1">
+      <div class="ik-modal-header">
+        <h3 class="ik-modal-title" id="ik-info-title">
+          <span aria-hidden="true">💡</span>
+          <span class="grad">Fun fact</span>
+        </h3>
+        <button
+          type="button"
+          class="ik-modal-close"
+          data-dismiss="ik-info-modal"
+          aria-label="Close"
+        >
+          Close
+        </button>
+      </div>
+      <div class="ik-modal-body">
+        <div class="ik-fact" aria-label="Fun fact">
+          <p>
+            This site is hosted on a home server built from my old Infinix
+            InBook X1 laptop, featuring an Intel Core i3-1005G1 (10th Gen,
+            dual-core, 4 threads, up to 3.4GHz), 8GB DDR4 RAM, and a 256GB
+            NVMe SSD.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://ikhwanulhakim.site/#person",
+      "name": "Muhammad Ikhwanul Hakim",
+      "jobTitle": ["Project Manager", "Software Engineer"],
+      "description": "Software Engineer and Project Manager with expertise in building scalable web and mobile applications. Explore projects, technical notes, and ways to collaborate.",
+      "url": "https://ikhwanulhakim.site/",
+      "image": "https://ikhwanulhakim.site/wp-content/uploads/2025/09/ikhwanul-hakim.jpeg",
+      "sameAs": [
+        "https://wa.me/6289691964368",
+        "https://instagram.com/ikhwanulhakim.me",
+        "https://www.linkedin.com/in/ikhwanulhakimm"
+      ]
+    }
+  </script>
+
+  <script>
+    (function () {
+      var root = document.getElementById("ikhwan-card");
+      if (!root) return;
+
+      // Theme toggle
+      var themeBtn = root.querySelector(".ik-toggle.ik-theme");
+      function toggleTheme(e) {
+        var isLight = root.getAttribute("data-theme") === "light";
+        var newTheme = isLight ? "dark" : "light";
+        root.setAttribute("data-theme", newTheme);
+        
+        if (themeBtn) {
+          themeBtn.setAttribute("aria-pressed", (!isLight).toString());
+          themeBtn.classList.add("ik-toggling");
+          setTimeout(function () {
+            themeBtn.classList.remove("ik-toggling");
+          }, 600);
+        }
+      }
+      if (themeBtn) {
+        themeBtn.addEventListener("click", toggleTheme);
+        themeBtn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleTheme(e);
+          }
+        });
+      }
+
+      // Lightweight modal with event delegation
+      var modal = root.querySelector("#ik-info-modal");
+      var lastFocused = null;
+
+      function openModal() {
+        if (!modal) return;
+        var wrap = root.querySelector(".ik-wrap");
+        if (wrap) wrap.classList.add("ik-modal-open");
+        lastFocused = document.activeElement;
+        modal.setAttribute("aria-hidden", "false");
+        requestAnimationFrame(function() {
+          var dialog = modal.querySelector(".ik-modal-dialog");
+          dialog && dialog.focus({ preventScroll: true });
+        });
+      }
+      function closeModal() {
+        if (!modal) return;
+        var wrap = root.querySelector(".ik-wrap");
+        if (wrap) wrap.classList.remove("ik-modal-open");
+        modal.setAttribute("aria-hidden", "true");
+        if (lastFocused && lastFocused.focus)
+          lastFocused.focus({ preventScroll: true });
+      }
+      
+      // Event delegation for better performance
+      root.addEventListener("click", function(e) {
+        var infoBtn = e.target.closest(".ik-toggle.ik-info");
+        if (infoBtn) {
+          openModal();
+          return;
+        }
+        
+        var dismissBtn = e.target.closest('[data-dismiss="ik-info-modal"]');
+        if (dismissBtn) {
+          closeModal();
+        }
+      });
+      
+      root.addEventListener("keydown", function(e) {
+        var infoBtn = e.target.closest(".ik-toggle.ik-info");
+        if (infoBtn && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          openModal();
+        }
+      });
+      
+      if (modal) {
+        modal.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeModal();
+        });
+      }
+    })();
+  </script>
+</div>
