@@ -12,6 +12,10 @@
 
 [![Self Hosted](https://img.shields.io/badge/Di_Host_Di-Laptop_Bekas_🏠-orange?style=flat-square)](#-fakta-menarik)
 
+<p align="center">
+  <img src="preview.png" alt="Preview" width="600"/>
+</p>
+
 ---
 
 ## 📖 Ceritanya

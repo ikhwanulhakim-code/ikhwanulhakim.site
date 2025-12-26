@@ -12,6 +12,10 @@
 
 [![Self Hosted](https://img.shields.io/badge/Hosted_On-Old_Laptop_🏠-orange?style=flat-square)](#-fun-fact)
 
+<p align="center">
+  <img src="preview.png" alt="Preview" width="600"/>
+</p>
+
 ---
 
 ## 📖 The Story
