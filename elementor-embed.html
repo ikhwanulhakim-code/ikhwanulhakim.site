@@ -1,4 +1,4 @@
-<div id="ikhwan-card" data-theme="dark" aria-label="Profil singkat">
+<div id="ikhwan-card" data-theme="dark" data-tab="profile" aria-label="Profil singkat">
   <style>
     #ikhwan-card {
       --bg: #0b0f19;
@@ -48,7 +48,7 @@
       min-height: 100svh;
       height: auto;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       padding: clamp(16px, 4vw, 40px);
       box-sizing: border-box;
@@ -62,8 +62,6 @@
       max-height: none;
       overflow: visible;
       overflow-x: hidden;
-      overscroll-behavior: none;
-      -webkit-overflow-scrolling: auto;
       position: relative;
       background: var(--card);
       border: 1px solid var(--ring);
@@ -71,8 +69,8 @@
       padding: clamp(22px, 4vw, 44px);
       box-shadow: 0 20px 60px #00000066;
       transition: background-color 0.5s ease, border-color 0.5s ease;
-      margin: 0 auto;
-      contain: layout style paint;
+      margin: auto 0;
+      contain: style paint;
     }
     #ikhwan-card .kicker {
       --g1: var(--brand);
@@ -517,6 +515,21 @@
         margin: 0;
         font-size: clamp(15px, 1.68vw, 65px);
       }
+      #ikhwan-card .ik-tab-nav {
+        flex-wrap: wrap;
+      }
+      #ikhwan-card .ik-tab-btn {
+        font-size: clamp(12px, 3vw, 16px);
+        padding: clamp(5px, 1.2vw, 10px) clamp(10px, 2vw, 18px);
+      }
+      #ikhwan-card .ik-project-grid,
+      #ikhwan-card .ik-about-grid {
+        grid-template-columns: 1fr;
+      }
+      #ikhwan-card .ik-exp-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
     @media (prefers-reduced-motion: reduce) {
       #ikhwan-card .kicker,
@@ -710,6 +723,436 @@
       filter: blur(5px);
       transition: filter 0.3s ease-out;
     }
+
+    /* ── Tab Navigation ── */
+    #ikhwan-card .ik-tab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(6px, 1.5vw, 12px);
+      margin-bottom: clamp(16px, 3vw, 32px);
+      margin-top: clamp(8px, 2vw, 16px);
+    }
+    #ikhwan-card .ik-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 1.5vw, 14px);
+      padding: clamp(6px, 1.5vw, 12px) clamp(12px, 2.5vw, 24px);
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--muted);
+      background: transparent;
+      box-shadow: none;
+      font-weight: 600;
+      font-size: clamp(13px, 1.5vw, 24px);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      border: 1px solid transparent;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #ikhwan-card .ik-tab-btn:hover {
+      color: var(--text);
+      background: var(--bg2);
+      transform: translateY(-2px) scale(1.04);
+    }
+    #ikhwan-card .ik-tab-btn:active {
+      transform: translateY(0);
+    }
+    #ikhwan-card[data-tab="profile"] .ik-tab-btn[data-tab="profile"],
+    #ikhwan-card[data-tab="experience"] .ik-tab-btn[data-tab="experience"],
+    #ikhwan-card[data-tab="portfolio"] .ik-tab-btn[data-tab="portfolio"],
+    #ikhwan-card[data-tab="projects"] .ik-tab-btn[data-tab="projects"],
+    #ikhwan-card[data-tab="about"] .ik-tab-btn[data-tab="about"] {
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      color: #fff;
+      border-color: transparent;
+    }
+
+    /* ── Visually Hidden (SEO + a11y) ── */
+    #ikhwan-card .ik-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ── Tab Panels ── */
+    #ikhwan-card .ik-tab-panel {
+      display: none;
+    }
+    #ikhwan-card[data-tab="profile"] .ik-tab-panel[data-panel="profile"] { display: block; }
+    #ikhwan-card[data-tab="experience"] .ik-tab-panel[data-panel="experience"] { display: block; }
+    #ikhwan-card[data-tab="portfolio"] .ik-tab-panel[data-panel="portfolio"] { display: block; }
+    #ikhwan-card[data-tab="projects"] .ik-tab-panel[data-panel="projects"] { display: block; }
+    #ikhwan-card[data-tab="about"] .ik-tab-panel[data-panel="about"] { display: block; }
+
+    /* ── Experience Timeline ── */
+    #ikhwan-card .ik-timeline {
+      position: relative;
+      padding-left: clamp(20px, 4vw, 40px);
+      border-left: 2px solid var(--brand);
+      opacity: 1;
+      margin-left: clamp(6px, 1.5vw, 14px);
+    }
+    #ikhwan-card .ik-timeline::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      left: -2px;
+      width: 2px;
+      background: var(--brand);
+      opacity: 0.3;
+    }
+    #ikhwan-card .ik-exp-item {
+      position: relative;
+      padding-bottom: clamp(16px, 3vw, 32px);
+    }
+    #ikhwan-card .ik-exp-item:last-child {
+      padding-bottom: 0;
+    }
+    #ikhwan-card .ik-exp-dot {
+      position: absolute;
+      left: calc(-1 * clamp(20px, 4vw, 40px) - 1px);
+      top: clamp(4px, 0.8vw, 8px);
+      width: clamp(10px, 1.5vw, 16px);
+      height: clamp(10px, 1.5vw, 16px);
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 3px var(--card), 0 0 10px var(--brand);
+      transform: translateX(-50%);
+    }
+    #ikhwan-card .ik-exp-body {
+      padding-left: clamp(4px, 1vw, 8px);
+    }
+    #ikhwan-card .ik-exp-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: clamp(8px, 1.5vw, 16px);
+      margin-bottom: clamp(4px, 0.8vw, 8px);
+    }
+    #ikhwan-card .ik-exp-role {
+      margin: 0;
+      font-size: clamp(16px, 2vw, 32px);
+      font-weight: 700;
+      background: linear-gradient(43deg, var(--brand) 0%, var(--brand2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #ikhwan-card .ik-exp-date {
+      display: inline-block;
+      background: var(--bg2);
+      border: 1px solid var(--ring);
+      border-radius: 999px;
+      padding: clamp(2px, 0.5vw, 6px) clamp(8px, 1.5vw, 16px);
+      font-size: clamp(11px, 1.1vw, 16px);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    #ikhwan-card .ik-exp-company {
+      margin: 0 0 clamp(4px, 0.8vw, 8px) 0;
+      color: var(--muted);
+      font-size: clamp(13px, 1.4vw, 22px);
+      font-weight: 600;
+    }
+    #ikhwan-card .ik-exp-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(13px, 1.3vw, 20px);
+      line-height: 1.5;
+    }
+
+    /* ── Project Grid (Portfolio + Projects) ── */
+    #ikhwan-card .ik-project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(clamp(240px, 45%, 380px), 1fr));
+      gap: clamp(12px, 3vw, 24px);
+    }
+    #ikhwan-card .ik-project-card {
+      background: var(--bg2);
+      border: 1px solid var(--ring);
+      border-radius: 14px;
+      padding: clamp(16px, 3vw, 28px);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #ikhwan-card .ik-project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px #0003;
+    }
+    #ikhwan-card .ik-project-title {
+      margin: 0 0 clamp(6px, 1vw, 12px) 0;
+      font-size: clamp(16px, 2vw, 28px);
+      font-weight: 700;
+      color: var(--text);
+    }
+    #ikhwan-card .ik-project-desc {
+      margin: 0 0 clamp(8px, 1.5vw, 16px) 0;
+      color: var(--muted);
+      font-size: clamp(13px, 1.3vw, 20px);
+      line-height: 1.5;
+    }
+    #ikhwan-card .ik-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(4px, 0.8vw, 8px);
+      margin-bottom: clamp(8px, 1.5vw, 16px);
+    }
+    #ikhwan-card .ik-tag {
+      background: var(--card);
+      border: 1px solid var(--ring);
+      border-radius: 999px;
+      font-size: clamp(11px, 1vw, 16px);
+      padding: clamp(2px, 0.4vw, 4px) clamp(8px, 1.2vw, 14px);
+      color: var(--muted);
+    }
+
+    /* ── Soon Badge (Projects tab) ── */
+    #ikhwan-card .ik-project-card--soon {
+      border-style: dashed;
+      opacity: 0.75;
+    }
+    #ikhwan-card .ik-project-card--soon:hover {
+      opacity: 1;
+    }
+    #ikhwan-card .ik-soon-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      color: #fff;
+      font-size: clamp(10px, 0.9vw, 14px);
+      font-weight: 700;
+      padding: clamp(2px, 0.4vw, 4px) clamp(8px, 1.2vw, 14px);
+      border-radius: 999px;
+      margin-bottom: clamp(8px, 1.5vw, 12px);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── About Grid ── */
+    #ikhwan-card .ik-about-intro {
+      margin: 0 0 clamp(16px, 3vw, 32px) 0;
+      font-size: clamp(15px, 1.68vw, 28px);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    #ikhwan-card .ik-about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(clamp(200px, 40%, 340px), 1fr));
+      gap: clamp(12px, 3vw, 24px);
+    }
+    #ikhwan-card .ik-about-card {
+      background: var(--bg2);
+      border: 1px solid var(--ring);
+      border-radius: 14px;
+      padding: clamp(16px, 3vw, 28px);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #ikhwan-card .ik-about-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px #0003;
+    }
+    #ikhwan-card .ik-about-card--featured {
+      background: linear-gradient(var(--bg2), var(--bg2)) padding-box,
+        linear-gradient(90deg, var(--brand), var(--brand2)) border-box;
+      border: 1px solid transparent;
+    }
+    #ikhwan-card .ik-about-icon {
+      font-size: clamp(24px, 4vw, 48px);
+      display: block;
+      margin-bottom: clamp(6px, 1.2vw, 12px);
+      line-height: 1;
+    }
+    #ikhwan-card .ik-about-card h4 {
+      margin: 0 0 clamp(4px, 0.8vw, 8px) 0;
+      font-size: clamp(14px, 1.6vw, 24px);
+      font-weight: 700;
+      color: var(--text);
+    }
+    #ikhwan-card .ik-about-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(13px, 1.3vw, 20px);
+      line-height: 1.5;
+    }
+
+    /* ── Fun/Gap Experience Item ── */
+    #ikhwan-card .ik-exp-item--fun .ik-exp-dot {
+      background: #f59e0b;
+      box-shadow: 0 0 0 3px var(--card), 0 0 10px #f59e0b;
+    }
+    #ikhwan-card .ik-exp-item--fun .ik-exp-role {
+      background: linear-gradient(43deg, #f59e0b 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #ikhwan-card .ik-exp-item--fun .ik-exp-desc {
+      font-style: italic;
+    }
+
+    /* ── Project Card Links ── */
+    #ikhwan-card .ik-project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(6px, 1.2vw, 10px);
+      margin-top: clamp(10px, 1.8vw, 16px);
+    }
+    #ikhwan-card .ik-project-links .btn {
+      font-size: clamp(12px, 1.2vw, 18px);
+      padding: clamp(6px, 1vw, 10px) clamp(14px, 2vw, 22px);
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 14px rgba(104, 164, 255, 0.25);
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+    }
+    #ikhwan-card .ik-project-links .btn:hover {
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 24px rgba(58, 215, 255, 0.35);
+      filter: brightness(1.1);
+      background: linear-gradient(135deg, var(--brand2), var(--brand));
+    }
+    #ikhwan-card .ik-project-links .btn:active {
+      transform: translateY(0) scale(1);
+    }
+    #ikhwan-card .ik-project-links .btn--outline {
+      background: var(--bg2);
+      border: 1px solid var(--brand);
+      color: var(--brand);
+      box-shadow: 0 2px 8px rgba(104, 164, 255, 0.12);
+      font-weight: 700;
+    }
+    #ikhwan-card .ik-project-links .btn--outline:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(104, 164, 255, 0.3);
+      filter: none;
+    }
+    #ikhwan-card .ik-project-links .btn .label {
+      font-size: clamp(11px, 1.1vw, 16px);
+    }
+    #ikhwan-card .ik-project-links .btn--disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+      background: var(--bg2);
+      border: 1px dashed var(--ring);
+      color: var(--muted);
+      box-shadow: none;
+    }
+
+    /* ── About Card Photo Button ── */
+    #ikhwan-card .ik-about-photo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(4px, 0.8vw, 8px);
+      margin-top: clamp(8px, 1.5vw, 12px);
+      padding: clamp(4px, 0.8vw, 8px) clamp(10px, 1.5vw, 16px);
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: clamp(11px, 1.1vw, 16px);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      -webkit-appearance: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #ikhwan-card .ik-about-photo-btn:hover {
+      transform: translateY(-2px) scale(1.06);
+      box-shadow: 0 6px 18px rgba(58, 215, 255, 0.3);
+      filter: brightness(1.1);
+    }
+    #ikhwan-card .ik-about-photo-btn:active {
+      transform: translateY(0) scale(1);
+    }
+
+    /* ── Image Lightbox Modal ── */
+    #ikhwan-card .ik-img-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+    }
+    #ikhwan-card .ik-img-modal[aria-hidden="true"] {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #ikhwan-card .ik-img-modal[aria-hidden="false"] {
+      visibility: visible;
+      opacity: 1;
+    }
+    #ikhwan-card .ik-img-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+    }
+    #ikhwan-card .ik-img-modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      z-index: 1;
+    }
+    #ikhwan-card .ik-img-modal-content img,
+    #ikhwan-card .ik-img-modal-content video {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: clamp(8px, 1.5vw, 16px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      object-fit: contain;
+      display: block;
+    }
+    #ikhwan-card .ik-img-modal-close {
+      position: absolute;
+      top: clamp(-12px, -2vw, -16px);
+      right: clamp(-8px, -1.5vw, -12px);
+      appearance: none;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: linear-gradient(135deg, var(--brand), var(--brand2)) !important;
+      color: #fff !important;
+      width: clamp(28px, 4vw, 40px) !important;
+      height: clamp(28px, 4vw, 40px) !important;
+      min-width: clamp(28px, 4vw, 40px);
+      min-height: clamp(28px, 4vw, 40px);
+      border-radius: 50% !important;
+      font-size: clamp(14px, 2vw, 22px);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 2;
+      line-height: 1;
+    }
+    #ikhwan-card .ik-img-modal-close svg {
+      width: 14px;
+      height: 14px;
+      stroke: #fff;
+      display: block;
+    }
+    #ikhwan-card .ik-img-modal-close:hover {
+      transform: scale(1.15);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
   </style>
   <style>
     @media (max-width: 600px) {
@@ -811,6 +1254,17 @@
         </div>
       </div>
 
+      <!-- Tab Navigation -->
+      <nav class="ik-tab-nav" role="tablist" aria-label="Sections">
+        <button class="ik-tab-btn" data-tab="profile" type="button" role="tab" aria-selected="true" aria-controls="panel-profile" id="tab-profile">Profile</button>
+        <button class="ik-tab-btn" data-tab="experience" type="button" role="tab" aria-selected="false" aria-controls="panel-experience" id="tab-experience">Experience</button>
+        <button class="ik-tab-btn" data-tab="portfolio" type="button" role="tab" aria-selected="false" aria-controls="panel-portfolio" id="tab-portfolio">Portfolio</button>
+        <button class="ik-tab-btn" data-tab="projects" type="button" role="tab" aria-selected="false" aria-controls="panel-projects" id="tab-projects">Projects</button>
+        <button class="ik-tab-btn" data-tab="about" type="button" role="tab" aria-selected="false" aria-controls="panel-about" id="tab-about">About</button>
+      </nav>
+
+      <!-- ═══ Profile Tab ═══ -->
+      <div class="ik-tab-panel" data-panel="profile" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile">
       <div class="profile-row">
         <div class="profile-photo" aria-label="Foto profil">
           <div class="avatar">
@@ -921,6 +1375,288 @@
           </svg>
         </a>
       </nav>
+      </div>
+
+      <!-- ═══ Experience Tab ═══ -->
+      <div class="ik-tab-panel" data-panel="experience" role="tabpanel" id="panel-experience" aria-labelledby="tab-experience">
+        <h2 class="ik-sr-only">Work Experience</h2>
+        <div class="ik-timeline">
+
+          <div class="ik-exp-item">
+            <div class="ik-exp-dot"></div>
+            <div class="ik-exp-body">
+              <div class="ik-exp-header">
+                <h3 class="ik-exp-role">Software Engineer</h3>
+                <span class="ik-exp-date"><time datetime="2025-09">Sep 2025</time> – Present</span>
+              </div>
+              <p class="ik-exp-company">PT. Instrumeta Teknologi Nusantara</p>
+              <p class="ik-exp-desc">Applied as a Project Manager — ended up as a Software Engineer because the team needed builders more than planners. Writing production code, shipping features, and proving that adaptability is a superpower.</p>
+            </div>
+          </div>
+
+          <div class="ik-exp-item ik-exp-item--fun">
+            <div class="ik-exp-dot"></div>
+            <div class="ik-exp-body">
+              <div class="ik-exp-header">
+                <h3 class="ik-exp-role">🍕 The Productive Unemployment Era</h3>
+                <span class="ik-exp-date"><time datetime="2025-07">Jul 2025</time> – <time datetime="2025-08">Aug 2025</time></span>
+              </div>
+              <p class="ik-exp-company">Self-Employed (Career Intermission)</p>
+              <p class="ik-exp-desc">Two months of strategic unemployment. Perfected homemade pizza dough, deployed a Proxmox-based home server, and briefly considered becoming a full-time infrastructure enthusiast. Spoiler: software won.</p>
+            </div>
+          </div>
+
+          <div class="ik-exp-item">
+            <div class="ik-exp-dot"></div>
+            <div class="ik-exp-body">
+              <div class="ik-exp-header">
+                <h3 class="ik-exp-role">Project Manager</h3>
+                <span class="ik-exp-date"><time datetime="2024-12">Dec 2024</time> – <time datetime="2025-06">Jun 2025</time></span>
+              </div>
+              <p class="ik-exp-company">PT. Ruang Algo Multimatics</p>
+              <p class="ik-exp-desc">Led delivery of enterprise software across ERP, government audit, clinical, and administration platforms. Owned PRDs, sprint planning, UAT, and client stakeholder management across 5+ concurrent products. Chose not to renew contract to pursue new opportunities.</p>
+            </div>
+          </div>
+
+          <div class="ik-exp-item">
+            <div class="ik-exp-dot"></div>
+            <div class="ik-exp-body">
+              <div class="ik-exp-header">
+                <h3 class="ik-exp-role">Programmer (Mobile Dev &amp; QA)</h3>
+                <span class="ik-exp-date"><time datetime="2023-10">Oct 2023</time> – <time datetime="2024-11">Nov 2024</time></span>
+              </div>
+              <p class="ik-exp-company">PT. Ruang Algo Multimatics</p>
+              <p class="ik-exp-desc">Built cross-platform mobile apps with Flutter for iOS &amp; Android across clinical and academic products. Wore the QA hat too — designing test cases, running regression suites, and ensuring production readiness before every release.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══ Portfolio Tab ═══ -->
+      <div class="ik-tab-panel" data-panel="portfolio" role="tabpanel" id="panel-portfolio" aria-labelledby="tab-portfolio">
+        <h2 class="ik-sr-only">Portfolio &amp; Work Highlights</h2>
+        <div class="ik-project-grid">
+
+          <div class="ik-project-card ik-project-card--soon">
+            <span class="ik-soon-badge">In Progress</span>
+            <h3 class="ik-project-title">Something's Cooking 👀</h3>
+            <p class="ik-project-desc">Currently shipping production software at PT. Instrumeta Teknologi Nusantara as a Software Engineer. Project details are under NDA — waiting on the green light to share more. Watch this space.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Software Engineer</span>
+              <span class="ik-tag">2025 – Present</span>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">Ankrah Studios Website V3.0</h3>
+            <p class="ik-project-desc">Spearheaded the complete redesign of a creative studio's digital presence — from requirement gathering with the client to production delivery with a cross-functional team.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Project Lead</span>
+              <span class="ik-tag">Web Development</span>
+              <span class="ik-tag">Client Relations</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://ankrahstudios.com/" target="_blank" rel="noopener noreferrer"><span class="label">Visit ↗</span></a>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">ERPGo — Enterprise Resource Planning</h3>
+            <p class="ik-project-desc">Multi-tenant ERP system covering 7+ modules: Sales, Procurement, HR, Manufacturing, Finance, and Logistics. Built for SMEs to centralize and streamline operations.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Project Management</span>
+              <span class="ik-tag">Jira</span>
+              <span class="ik-tag">ERP</span>
+              <span class="ik-tag">Multi-module</span>
+            </div>
+            <div class="ik-project-links">
+              <span class="btn btn--disabled"><span class="label">🔒 Confidential</span></span>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">CLINICALGo Patient App</h3>
+            <p class="ik-project-desc">Cross-platform mobile app (iOS/Android) enabling patients to book appointments, track consultation history, and manage clinic memberships in real time.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Flutter</span>
+              <span class="ik-tag">iOS</span>
+              <span class="ik-tag">Android</span>
+              <span class="ik-tag">REST API</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://clinicalgo.ruangalgo.com/" target="_blank" rel="noopener noreferrer"><span class="label">Product Site ↗</span></a>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">SI MAWAS — Audit Management</h3>
+            <p class="ik-project-desc">Government audit system for end-to-end internal oversight: annual planning, field assignments, audit execution, reporting, and follow-up monitoring.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Project Management</span>
+              <span class="ik-tag">QA</span>
+              <span class="ik-tag">Government Tech</span>
+            </div>
+            <div class="ik-project-links">
+              <span class="btn btn--disabled"><span class="label">🔒 Confidential</span></span>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">DesaLink — MBKM Information System</h3>
+            <p class="ik-project-desc">Academic village partnership platform for MBKM programs — handling registration, participant selection, activity monitoring, and bilingual reporting workflows.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Project Management</span>
+              <span class="ik-tag">System Design</span>
+              <span class="ik-tag">UAT</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://desalink.ulm.ac.id/" target="_blank" rel="noopener noreferrer"><span class="label">Visit ↗</span></a>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">CLINICALGo BI Dashboard</h3>
+            <p class="ik-project-desc">Business intelligence dashboard built on a star schema data warehouse with ETL via Pentaho. Interactive Metabase visualizations for clinic revenue and performance insights.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Business Intelligence</span>
+              <span class="ik-tag">Metabase</span>
+              <span class="ik-tag">Pentaho</span>
+              <span class="ik-tag">Data Warehouse</span>
+            </div>
+            <div class="ik-project-links">
+              <span class="btn btn--disabled"><span class="label">🔒 Confidential</span></span>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">SI PAKAI — Employee Administration</h3>
+            <p class="ik-project-desc">Civil servant administration system for promotions, salary adjustments, retirement processing, and document archival — built for public sector HR compliance.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Project Management</span>
+              <span class="ik-tag">Government Tech</span>
+              <span class="ik-tag">UAT</span>
+            </div>
+            <div class="ik-project-links">
+              <span class="btn btn--disabled"><span class="label">🔒 Confidential</span></span>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">SIAGoCloud Official Website</h3>
+            <p class="ik-project-desc">Marketing website for a SaaS clinical information platform — responsive design, SEO-optimized pages, and integrated product demos for user acquisition.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">WordPress</span>
+              <span class="ik-tag">SEO</span>
+              <span class="ik-tag">Web Development</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://siagocloud.ruangalgo.com/" target="_blank" rel="noopener noreferrer"><span class="label">Visit ↗</span></a>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">Academic Mobile Portals (SIAGoCloud)</h3>
+            <p class="ik-project-desc">The mobile companion to SIAGoCloud — Flutter apps for students and lecturers covering KRS submission, grade management, attendance tracking, class scheduling, and Kampus Merdeka program supervision.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">Flutter</span>
+              <span class="ik-tag">iOS</span>
+              <span class="ik-tag">Android</span>
+              <span class="ik-tag">SIAGoCloud</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://siagocloud.ruangalgo.com/" target="_blank" rel="noopener noreferrer"><span class="label">Product Site ↗</span></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══ Projects Tab ═══ -->
+      <div class="ik-tab-panel" data-panel="projects" role="tabpanel" id="panel-projects" aria-labelledby="tab-projects">
+        <h2 class="ik-sr-only">Personal Projects</h2>
+        <div class="ik-project-grid">
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">ikhwanulhakim.site</h3>
+            <p class="ik-project-desc">The site you're currently browsing. A single HTML file pasted into WordPress via Elementor — because sometimes the best architecture is no architecture. Self-hosted on a repurposed laptop running Proxmox.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">HTML</span>
+              <span class="ik-tag">CSS</span>
+              <span class="ik-tag">Vanilla JS</span>
+              <span class="ik-tag">WordPress</span>
+              <span class="ik-tag">Proxmox</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://ikhwanulhakim.site" target="_blank" rel="noopener noreferrer"><span class="label">Visit ↗</span></a>
+              <a class="btn btn--outline" href="https://www.google.com/search?q=ikhwanulhakim.site" target="_blank" rel="noopener noreferrer"><span class="label">Google it 🔍</span></a>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <span class="ik-soon-badge">Try it — it's free! 🚀</span>
+            <h3 class="ik-project-title">Kashvo</h3>
+            <p class="ik-project-desc">Personal finance management app with full PWA offline support. Track income, expenses, and budgets — works even without internet. Still free, by the way.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">PWA</span>
+              <span class="ik-tag">Offline-first</span>
+              <span class="ik-tag">Web App</span>
+              <span class="ik-tag">Finance</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://kashvo.app/" target="_blank" rel="noopener noreferrer"><span class="label">Visit ↗</span></a>
+              <a class="btn btn--outline" href="https://www.google.com/search?q=kashvo+app+money+management" target="_blank" rel="noopener noreferrer"><span class="label">Google it 🔍</span></a>
+            </div>
+          </div>
+
+          <div class="ik-project-card">
+            <h3 class="ik-project-title">TickTock</h3>
+            <p class="ik-project-desc">A beautifully simple countdown timer built as a teaching project — showing friends how to leverage AI for rapid app development. From idea to deployed in one session.</p>
+            <div class="ik-tags">
+              <span class="ik-tag">AI-assisted Dev</span>
+              <span class="ik-tag">Web App</span>
+              <span class="ik-tag">Vercel</span>
+            </div>
+            <div class="ik-project-links">
+              <a class="btn in" href="https://tryticktock.vercel.app/" target="_blank" rel="noopener noreferrer"><span class="label">Visit ↗</span></a>
+              <a class="btn btn--outline" href="https://www.google.com/search?q=tryticktock+countdown+timer" target="_blank" rel="noopener noreferrer"><span class="label">Google it 🔍</span></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══ About Tab ═══ -->
+      <div class="ik-tab-panel" data-panel="about" role="tabpanel" id="panel-about" aria-labelledby="tab-about">
+        <h2 class="ik-sr-only">About Muhammad Ikhwanul Hakim</h2>
+        <p class="ik-about-intro">I'm a software engineer and project manager who believes great products come from great teamwork. When I'm not shipping code or wrangling sprints, I'm probably making pizza from scratch or petting a cat.</p>
+        <div class="ik-about-grid">
+          <div class="ik-about-card">
+            <span class="ik-about-icon" aria-hidden="true">🍕</span>
+            <h4>I can make pizza</h4>
+            <p>From scratch. It slaps.</p>
+            <button class="ik-about-photo-btn" data-img="https://ikhwanulhakim.site/wp-content/uploads/2026/03/muhammad-ikhwanul-hakim-homemade-hotdog-pizza-scaled.webp" type="button">📷 See proof</button>
+          </div>
+          <div class="ik-about-card">
+            <span class="ik-about-icon" aria-hidden="true">🐱</span>
+            <h4>I love cats</h4>
+            <p>No explanation needed.</p>
+            <button class="ik-about-photo-btn" data-img="https://ikhwanulhakim.site/wp-content/uploads/2026/03/ikhwanul-hakim-cat-working-from-home-scaled.webp" type="button">📷 Show me</button>
+          </div>
+          <div class="ik-about-card">
+            <span class="ik-about-icon" aria-hidden="true">💻</span>
+            <h4>Home server nerd</h4>
+            <p>This site is hosted on my old Infinix InBook X1 laptop (i3-1005G1, 8GB RAM, 256GB NVMe). Yes, really.</p>
+            <button class="ik-about-photo-btn" data-img="https://ikhwanulhakim.site/wp-content/uploads/2026/03/ikhwanul-hakim-proxmox-homeserver-setup-used-laptop.mp4" type="button">🎥 See the setup</button>
+          </div>
+          <div class="ik-about-card ik-about-card--featured">
+            <span class="ik-about-icon" aria-hidden="true">🤔</span>
+            <h4>Why WordPress + pure HTML?</h4>
+            <p>I planned to use WordPress properly, then got a job offer before I had time to set it up. Now it's a single HTML snippet pasted into an Elementor block. Architecture by deadline.</p>
+          </div>
+        </div>
+      </div>
+
     </section>
   </div>
 
@@ -966,16 +1702,51 @@
     </div>
   </div>
 
+  <div
+    class="ik-img-modal"
+    id="ik-img-modal"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image preview"
+  >
+    <div class="ik-img-modal-backdrop" data-dismiss="ik-img-modal"></div>
+    <div class="ik-img-modal-content">
+      <button type="button" class="ik-img-modal-close" data-dismiss="ik-img-modal" aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+      <img id="ik-img-modal-src" src="" alt="Preview" loading="lazy" />
+      <video id="ik-vid-modal-src" src="" controls playsinline style="display:none"></video>
+    </div>
+  </div>
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "@id": "https://ikhwanulhakim.site/#person",
       "name": "Muhammad Ikhwanul Hakim",
-      "jobTitle": ["Project Manager", "Software Engineer"],
-      "description": "Software Engineer and Project Manager with expertise in building scalable web and mobile applications. Explore projects, technical notes, and ways to collaborate.",
+      "givenName": "Muhammad Ikhwanul",
+      "familyName": "Hakim",
+      "jobTitle": ["Software Engineer", "Project Manager"],
+      "description": "Software Engineer and Project Manager with expertise in building scalable web and mobile applications. Experienced in Flutter, WordPress, ERP systems, and government tech.",
       "url": "https://ikhwanulhakim.site/",
-      "image": "https://ikhwanulhakim.site/wp-content/uploads/2025/09/ikhwanul-hakim.jpeg",
+      "image": "https://ikhwanulhakim.site/wp-content/uploads/2025/12/muhammad-ikhwanul-hakim-software-engineer-project-manager.png",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "PT. Instrumeta Teknologi Nusantara"
+      },
+      "knowsAbout": [
+        "Software Engineering",
+        "Project Management",
+        "Flutter",
+        "Mobile Development",
+        "WordPress",
+        "ERP Systems",
+        "Business Intelligence",
+        "Progressive Web Apps",
+        "REST API",
+        "Self-Hosting",
+        "Proxmox"
+      ],
       "sameAs": [
         "https://wa.me/6289691964368",
         "https://instagram.com/ikhwanulhakim.me",
@@ -1063,6 +1834,86 @@
       if (modal) {
         modal.addEventListener("keydown", function (e) {
           if (e.key === "Escape") closeModal();
+        });
+      }
+
+      // Tab switching
+      var validTabs = ["profile", "experience", "portfolio", "projects", "about"];
+      var savedTab = localStorage.getItem("ik-tab");
+      if (validTabs.indexOf(savedTab) === -1) savedTab = "profile";
+      root.setAttribute("data-tab", savedTab);
+      root.querySelectorAll('.ik-tab-btn[role="tab"]').forEach(function(t) {
+        t.setAttribute('aria-selected', t.getAttribute('data-tab') === savedTab ? 'true' : 'false');
+      });
+
+      root.addEventListener("click", function (e) {
+        var tabBtn = e.target.closest(".ik-tab-btn");
+        if (!tabBtn) return;
+        var tab = tabBtn.getAttribute("data-tab");
+        if (validTabs.indexOf(tab) === -1) return;
+        root.setAttribute("data-tab", tab);
+        localStorage.setItem("ik-tab", tab);
+        // Update ARIA tab states
+        root.querySelectorAll('.ik-tab-btn[role="tab"]').forEach(function(t) {
+          t.setAttribute('aria-selected', t.getAttribute('data-tab') === tab ? 'true' : 'false');
+        });
+      });
+
+      // Image lightbox modal
+      var imgModal = root.querySelector("#ik-img-modal");
+      var imgModalSrc = root.querySelector("#ik-img-modal-src");
+      var vidModalSrc = root.querySelector("#ik-vid-modal-src");
+      var imgLastFocused = null;
+      var videoExts = [".mp4", ".webm", ".ogg", ".mov"];
+
+      function isVideo(src) {
+        var lower = src.toLowerCase().split("?")[0];
+        return videoExts.some(function(ext) { return lower.endsWith(ext); });
+      }
+
+      function openImgModal(src) {
+        if (!imgModal || !src) return;
+        imgLastFocused = document.activeElement;
+        if (isVideo(src)) {
+          imgModalSrc.style.display = "none";
+          vidModalSrc.src = src;
+          vidModalSrc.style.display = "block";
+        } else {
+          vidModalSrc.style.display = "none";
+          imgModalSrc.src = src;
+          imgModalSrc.style.display = "block";
+        }
+        imgModal.setAttribute("aria-hidden", "false");
+        var wrap = root.querySelector(".ik-wrap");
+        if (wrap) wrap.classList.add("ik-modal-open");
+      }
+      function closeImgModal() {
+        if (!imgModal) return;
+        imgModal.setAttribute("aria-hidden", "true");
+        if (imgModalSrc) { imgModalSrc.src = ""; imgModalSrc.style.display = "block"; }
+        if (vidModalSrc) { vidModalSrc.pause(); vidModalSrc.src = ""; vidModalSrc.style.display = "none"; }
+        var wrap = root.querySelector(".ik-wrap");
+        if (wrap) wrap.classList.remove("ik-modal-open");
+        if (imgLastFocused && imgLastFocused.focus)
+          imgLastFocused.focus({ preventScroll: true });
+      }
+
+      root.addEventListener("click", function(e) {
+        var photoBtn = e.target.closest(".ik-about-photo-btn");
+        if (photoBtn) {
+          var src = photoBtn.getAttribute("data-img");
+          if (src) openImgModal(src);
+          return;
+        }
+        var dismissImg = e.target.closest('[data-dismiss="ik-img-modal"]');
+        if (dismissImg) {
+          closeImgModal();
+        }
+      });
+
+      if (imgModal) {
+        imgModal.addEventListener("keydown", function(e) {
+          if (e.key === "Escape") closeImgModal();
         });
       }
     })();
